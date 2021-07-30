@@ -1,0 +1,9 @@
+.issues{
+  border: 2px black;
+  padding: 10px;
+  overflow: auto;
+}
+
+::ng-deep .mat-card .card{
+  border: 2px red !important;
+}

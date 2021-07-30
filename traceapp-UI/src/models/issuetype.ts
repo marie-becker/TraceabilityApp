@@ -1,0 +1,3 @@
+export interface Issuetype {
+  name: string;             // User story, Epic, ...
+}
