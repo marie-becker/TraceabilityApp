@@ -1,9 +1,32 @@
-.issues{
-  border: 2px black;
-  padding: 10px;
-  overflow: auto;
+.text {
+  display: block;
+  width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
-::ng-deep .mat-card .card{
+
+.issues::-webkit-scrollbar-track {
+  margin-top: 16px;
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+  background-color: #F5F5F5;
+}
+
+.issues::-webkit-scrollbar {
+  width: 12px;
+  background-color: #F5F5F5;
+}
+
+.issues::-webkit-scrollbar-thumb {
+  margin-top: 16px;
+  border-radius: 10px;
+  -webkit-box-shadow: inset 0 0 6px rgba(167, 43, 43, 0.3);
+  background-color: #555;
+}
+
+::ng-deep .mat-card .card {
   border: 2px red !important;
 }
+

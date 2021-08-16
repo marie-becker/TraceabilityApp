@@ -1,15 +1,16 @@
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
+const createError = require('http-errors');
+const express = require('express');
+const path = require('path');
+const cookieParser = require('cookie-parser');
+const logger = require('morgan');
 
-var indexRouter = require('./routes/index');
-var jiraRouter = require('./routes/jira');
-var neo4jRouter = require('./routes/neo4j');
+const indexRouter = require('./routes/index');
+const jiraRouter = require('./routes/jira');
+const neo4jRouter = require('./routes/neo4j');
+const neo4jTestRouter = require('./routes/neo4jTests');
 
 
-var app = express();
+const app = express();
 
 app.listen(3000);
 
@@ -26,6 +27,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/api/jira', jiraRouter);
 app.use('/api/neo4j', neo4jRouter);
+app.use('/api/neo4jTest', neo4jTestRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

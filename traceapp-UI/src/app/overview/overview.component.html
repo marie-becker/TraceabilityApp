@@ -1,41 +1,29 @@
-<body style="padding-top: 30px;">
+<body style="padding-top: 30px; padding-bottom: 40px; position:fixed; width: 100%;">
 
 <h1 align="center" style="color:#2c397e; font-weight: bold; padding-bottom: 30px;">Overview of your requirements</h1>
-<div style="display:flex; flex-direction: row; width: 100%; justify-content : center;">
+<div style="display:flex; flex-direction: row; width: 100%; height:80%; justify-content: center; overflow: hidden; margin-bottom: 140px;">
 
-<mat-list class="issues">
-  <div mat-subheader style="color: #000000; font-size: 16px;">To be reviewed</div>
-  <mat-card *ngFor="let issue of issues" style="margin: 1px;">
-    <a style="font-weight: bold" href="https://hbrs.atlassian.net/browse/{{issue.key}}">{{issue.key}}</a>
-    <p>{{issue.fields.summary}}</p>
-  </mat-card>
-  <mat-card *ngFor="let issue of issues" style="margin: 1px;">
-    <a style="font-weight: bold" href="https://hbrs.atlassian.net/browse/{{issue.key}}">{{issue.key}}</a>
-    <p>{{issue.fields.summary}}</p>
-  </mat-card>
-  <mat-card *ngFor="let issue of issues" style="margin: 1px;">
-    <a style="font-weight: bold" href="https://hbrs.atlassian.net/browse/{{issue.key}}">{{issue.key}}</a>
-    <p>{{issue.fields.summary}}</p>
-  </mat-card>
-  <mat-card *ngFor="let issue of issues "style="margin: 1px;">
-    <a style="font-weight: bold" href="https://hbrs.atlassian.net/browse/{{issue.key}}">{{issue.key}}</a>
-    <p>{{issue.fields.summary}}</p>
-  </mat-card>
-</mat-list>
-
-  <mat-list class="issues">
-    <div mat-subheader style="color: #000000; font-size: 16px;">Non-traceable</div>
-    <mat-card *ngFor="let issue of issues" class="card" style="margin: 1px;">
+  <mat-list class="issues" style="width: 27%; overflow-y: scroll; overflow-x: hidden;">
+    <div mat-subheader style="color: #000000; font-size: 16px;">To be reviewed</div>
+    <mat-card *ngFor="let issue of reviewableIssues" style="margin: 1px;">
       <a style="font-weight: bold" href="https://hbrs.atlassian.net/browse/{{issue.key}}">{{issue.key}}</a>
-      <p>{{issue.fields.summary}}</p>
+      <p class="text">{{issue.summary}}</p>
     </mat-card>
   </mat-list>
 
-  <mat-list class="issues">
-    <div mat-subheader style="color: #000000; font-size: 16px;">Traceable</div>
-    <mat-card *ngFor="let issue of issues" style="margin: 1px;">
+  <mat-list class="issues" style="width: 27%; overflow-y: scroll; overflow-x: hidden;">
+    <div mat-subheader style="color: #000000; font-size: 16px;">Non-traceable</div>
+    <mat-card *ngFor="let issue of nonTraceableIssues" class="card" style="margin: 1px;">
       <a style="font-weight: bold" href="https://hbrs.atlassian.net/browse/{{issue.key}}">{{issue.key}}</a>
-      <p>{{issue.fields.summary}}</p>
+      <p class="text">{{issue.summary}}</p>
+    </mat-card>
+  </mat-list>
+
+  <mat-list class="issues" style="width: 27%; overflow-y: scroll; overflow-x: hidden;">
+    <div mat-subheader style="color: #000000; font-size: 16px;">Traceable</div>
+    <mat-card *ngFor="let issue of traceableIssues" style="margin: 1px;">
+      <a style="font-weight: bold" href="https://hbrs.atlassian.net/browse/{{issue.key}}">{{issue.key}}</a>
+      <p class="text">{{issue.summary}}</p>
     </mat-card>
   </mat-list>
 
