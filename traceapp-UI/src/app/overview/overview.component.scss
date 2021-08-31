@@ -6,20 +6,35 @@
   text-overflow: ellipsis;
 }
 
+.columns {
+  width: 27%;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
 
-.issues::-webkit-scrollbar-track {
+.columns div {
+  color: #000000;
+  font-size: 16px;
+}
+
+.columns mat-card{
+  margin: 1px;
+}
+
+
+.columns::-webkit-scrollbar-track {
   margin-top: 16px;
   -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
   border-radius: 10px;
   background-color: #F5F5F5;
 }
 
-.issues::-webkit-scrollbar {
+.columns::-webkit-scrollbar {
   width: 12px;
   background-color: #F5F5F5;
 }
 
-.issues::-webkit-scrollbar-thumb {
+.columns::-webkit-scrollbar-thumb {
   margin-top: 16px;
   border-radius: 10px;
   -webkit-box-shadow: inset 0 0 6px rgba(167, 43, 43, 0.3);

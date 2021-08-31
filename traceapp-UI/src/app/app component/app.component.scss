@@ -14,7 +14,9 @@ ul {
 li {
   float: left;
   border-right: 1px solid #bbb;
+  height: 50px;
 }
+
 
 li a, .brand {
   display: block;
@@ -24,8 +26,19 @@ li a, .brand {
   text-decoration: none;
 }
 
+li button{
+  display: block;
+  color: white;
+  text-align: center;
+  text-decoration: none;
+  background-color: #3f51b5;
+  cursor: pointer;
+  border: 0;
+  height: 50px;
+}
+
 /* Change the link color to #111 (black) on hover */
-li a:hover {
+li a:hover, li button:hover {
   background-color: #111;
 }
 

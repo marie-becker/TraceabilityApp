@@ -1,28 +1,22 @@
-<form style="margin-top: 30px; padding-right: 3%; padding-left: 4%; margin-bottom: 20px; text-align: center"
-      (input)="searchChange()">
-  <mat-form-field style="width: 96%;; vertical-align: middle" appearance="outline">
-    <input style="padding-left: 5px; padding-bottom: 5px; font-size: 16px" type="text"
-           placeholder="SEARCH FOR SOFTWARE CLASSES" [formControl]="searchControl" matInput
-           (change)="searchChange()">
+<form class="searchbar" (input)="searchChange()">
+  <mat-form-field matTooltip="Enter an issue's key or its summary to search for it." appearance="outline">
+    <input type="text" placeholder="SEARCH FOR SOFTWARE CLASSES" [formControl]="searchControl" matInput (change)="searchChange()">
   </mat-form-field>
 </form>
 
-<div style="display: flex; flex-direction: row; height: 80%; width: 100%;">
-  <mat-selection-list style="overflow:scroll; overflow-x: hidden; width:25%; margin-left: 5%" class="issues"
-                      [multiple]="false">
-    <div mat-subheader style="color: #000000; font-size: 16px;">Requirements</div>
+<div class="main-container">
+  <mat-selection-list class="issues" [multiple]="false">
+    <div mat-subheader style="color: #000000; font-size: 16px;" matTooltip="A list of your projects classes.">Software-Classes</div>
 
     <mat-list-option *ngFor="let c of classes" style="margin: 1px;"
-                     (click)="getIssuesForClass(c.filename); selectedClass=c; add = false;edit = false;">
+                     (click)="getIssuesForClass(c.filename); selectedClass=c; edit = false;">
       <mat-card>{{c.filename}}</mat-card>
     </mat-list-option>
 
   </mat-selection-list>
-  <div *ngIf="selectedClass && selectedClassIssues"
-       style="border-color: red; width: 65%; padding-left: 10px; padding-right: 5%; overflow:hidden" class="issues">
-
-    <p *ngIf="selectedClass.path">{{selectedClass.path}}</p>
-    <h1>{{selectedClass.filename}}</h1>
+  <div *ngIf="selectedClass && selectedClassIssues" class="right-container">
+    <a *ngIf="selectedClass.path" href="https://github.com/marie-becker/testprojekt-a/blob/master/{{selectedClass.path}}">{{selectedClass.path}}</a>
+    <h1 style="font-weight: bold">{{selectedClass.filename}}</h1>
 
     <table>
       <tr>
@@ -34,30 +28,19 @@
 
     <p style="font-weight: bold">Implements:</p>
 
-    <div *ngIf="edit==false && add==false">
+    <!-- Table in view mode -->
+    <div *ngIf="edit==false">
       <table class="classes" width="100%">
         <tr style="" class="classes" *ngFor="let issue of selectedClassIssues">
           <td class="classes">{{issue.key}} - {{issue.summary}}</td>
         </tr>
       </table>
+      <br>
+      <button mat-raised-button color="primary" (click)="edit = true; getAvailableIssues(selectedClass)">Edit</button>
     </div>
 
-
+    <!-- Table in edit mode -->
     <div *ngIf="edit==true">
-      <table class="classes" width="100%">
-        <tr class="classes" *ngFor="let issue of selectedClassIssues">
-          <td class="classes">{{issue.key}} - {{issue.summary}}</td>
-          <td style="padding: 0; text-align: center; vertical-align: middle;" class="classes" width="5%">
-            <button mat-icon-button (click)="del(issue.key)">
-              <mat-icon color="primary">delete</mat-icon>
-            </button>
-          </td>
-        </tr>
-      </table>
-    </div>
-    <br>
-
-    <div *ngIf="add==true">
       <table class="classes" width="100%">
         <tr class="classes" *ngFor="let issue of selectedClassIssues">
           <td class="classes">{{issue.key}} - {{issue.summary}}</td>
@@ -84,26 +67,8 @@
           </td>
         </tr>
       </table>
-    </div>
-
-
-    <div *ngIf="!add && !edit">
-      <button *ngIf="selectedClassIssues.length != 0" mat-raised-button color="primary" style="margin-right: 5px;"
-              (click)="edit = true">Edit
-        Element
-      </button>
-      <button mat-raised-button color="primary" (click)="add = true; getAvailableIssues()">Add Element</button>
-    </div>
-    <button *ngIf="edit || add" mat-raised-button color="primary" (click)="add = false; edit = false;">Done</button>
-
-
-    <p style="font-weight: bold; margin-top: 30px;">Tested in:</p>
-    <div>
-      <table class="classes" width="100%">
-        <tr style="" class="classes" *ngFor="let cl of selectedClassIssues">
-          <td class="classes"></td>
-        </tr>
-      </table>
+      <br>
+      <button *ngIf="edit" mat-raised-button color="primary" (click)="edit = false;">Done</button>
     </div>
 
   </div>

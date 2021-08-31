@@ -19,8 +19,6 @@ export class ReviewComponent implements OnInit {
   selectedIssuesClasses: String[];
   availableClasses: String[];
   edit = false;
-  editClass = false;
-  add = false;
   classControl = new FormControl('', Validators.required);
   searchControl = new FormControl();
 
@@ -28,7 +26,7 @@ export class ReviewComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.http.get('/api/neo4j/getReviewableIssues').subscribe((data: IssueMin[]) => {
+    this.http.get('/api/neo4j/reviewableIssues').subscribe((data: IssueMin[]) => {
       this.issues = data.sort((a,b) => a.key.localeCompare(b.key));
       this.searchIssues = data;
       console.log(data)
@@ -46,13 +44,13 @@ export class ReviewComponent implements OnInit {
   }
 
   getAvailableClasses() {
-    this.http.get(`/api/neo4j/getAllClasses`).subscribe((data: String[]) => {
+    this.http.get(`/api/neo4j/allClassNames`).subscribe((data: String[]) => {
       this.availableClasses = data.filter(n => !this.selectedIssuesClasses.includes(n)).sort();
     })
   }
 
   getClassesForReq(key) {
-    this.http.get(`/api/neo4j/getClass/${key}`).subscribe((data: String[]) => {
+    this.http.get(`/api/neo4j/classes/${key}`).subscribe((data: String[]) => {
       this.selectedIssuesClasses = data.sort();
     })
   }
@@ -62,7 +60,7 @@ export class ReviewComponent implements OnInit {
     this.getClassesForReq(key);
   }
 
-  del(key, cl) {
+  deleteTraceBox(key, cl) {
     Swal.fire({
       title: 'Do you really want to delete the trace?',
       showCancelButton: true,
@@ -107,6 +105,28 @@ export class ReviewComponent implements OnInit {
         this.getReq(this.issues[0].key);
         this.getClassesForReq(this.issues[0].key);
       }
+    })
+  }
+  finishAllBox() {
+    Swal.fire({
+      title: 'Do you really want to dismiss every issue warning?',
+      showCancelButton: true,
+      confirmButtonColor: "#1976d2",
+      cancelButtonText: "No",
+      confirmButtonText: "Yes",
+      showConfirmButton: true,
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.finishAll();
+      }
+    })
+  }
+
+  finishAll(){
+    this.http.get('/api/neo4j/setIssuesToFalse', {responseType:"text"}).subscribe((r:string) => {
+      console.log(r);
+      this.getIssues();
+      this.selectedIssue = null;
     })
   }
 }

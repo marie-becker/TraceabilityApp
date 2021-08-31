@@ -1,5 +1,4 @@
 import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute} from "@angular/router";
 import {HttpClient} from "@angular/common/http";
 import {FormControl, Validators} from "@angular/forms";
 import {Softwareclass} from "../../models/softwareclass";
@@ -19,47 +18,44 @@ export class ArchitectureComponent implements OnInit {
   selectedClass: Softwareclass;
   selectedClassIssues: IssueMin[];
   edit = false;
-  editClass = false;
-  add = false;
   issueControl = new FormControl('', Validators.required);
   availableIssues: IssueMin[];
 
 
-  constructor(private route: ActivatedRoute, private http: HttpClient) {
+  constructor(private http: HttpClient) {
   }
 
   async ngOnInit(): Promise<void> {
     //await this.getAllClasses();
     this.http.get('/api/neo4j/classList').subscribe((data: Softwareclass[]) => {
-      this.classes = data;
-      this.searchClasses = data;
+      console.log(data)
+      this.classes = data.sort((a,b) => a.filename.localeCompare(b.filename));
+      this.searchClasses = this.classes;
       if (this.classes.length != 0) {
         this.selectedClass = this.classes[0];
         this.getIssuesForClass(this.classes[0].filename);
       }
     })
-
   }
 
   searchChange() {
     this.classes = this.searchClasses.filter(i => i.filename.toLowerCase().includes(this.searchControl.value.toLowerCase()));
   }
 
-  getAvailableIssues() {
-    let requirements = this.selectedClassIssues;
-    this.http.get('/api/neo4j/getRequirements').toPromise()
+  getAvailableIssues(file) {
+    console.log(file)
+    this.http.post(`/api/neo4j/availableIssues`, {file:file}).toPromise()
       .then((data: IssueMin[]) => {
-        console.log(data);
-        this.availableIssues = data.filter(({key: id1}) => !requirements.some(({key: id2}) => id1 === id2));
-        console.log(this.availableIssues.length + "/" + data.length)
+        console.log(data.length);
+        this.availableIssues = data.sort((a, b) => a.key.slice(a.key.length - 4).localeCompare(b.key.slice(b.key.length - 4)));
       })
       .catch(error => console.log(error))
   }
 
   getIssuesForClass(filename) {
-    this.http.get(`/api/neo4j/getIssuesOfClass/${filename}`).toPromise()
+    this.http.get(`/api/neo4j/issuesOfClass/${filename}`).toPromise()
       .then((data: IssueMin[]) => {
-        this.selectedClassIssues = data;
+        this.selectedClassIssues = data.sort((a, b) => a.key.slice(a.key.length - 4).localeCompare(b.key.slice(b.key.length - 4)));
       })
   }
 
@@ -70,7 +66,7 @@ export class ArchitectureComponent implements OnInit {
     }, {responseType: 'text'}).toPromise()
       .then(async r => {
         await this.getIssuesForClass(this.selectedClass.filename);
-        await this.getAvailableIssues();
+        await this.getAvailableIssues(this.selectedClass);
       });
   }
 
@@ -79,12 +75,6 @@ export class ArchitectureComponent implements OnInit {
       this.classes = data;
       this.searchClasses = data;
     })
-  }
-
-  updateSelectedClass(filename) {
-    this.selectedClass = this.classes.filter((item) => item.filename === filename)[0];
-    this.selectedClassIssues = this.selectedClass.requirements;
-    console.log(this.selectedClass);
   }
 
   deleteTrace(key) {

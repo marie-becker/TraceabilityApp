@@ -1,7 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
 import {HttpClient} from "@angular/common/http";
-import {FormControl} from "@angular/forms";
 
 @Component({
   selector: 'app-help',
@@ -21,7 +20,7 @@ export class HelpComponent implements OnInit {
     let issues;
     this.http.get(`/api/jira/keysAndSummary`).subscribe((data) => {
       issues = data;
-      this.http.post('/api/neo4j/postNodes', {issues: issues}, {responseType: 'text'}).subscribe(r => {
+      this.http.post('/api/neo4j/jiraToNeo4j', {issues: issues}, {responseType: 'text'}).subscribe(r => {
         console.log("error")
         console.log(r);
       });

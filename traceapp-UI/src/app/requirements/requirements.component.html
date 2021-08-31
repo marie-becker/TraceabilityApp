@@ -1,37 +1,38 @@
-<form style="margin-top: 30px; padding-right: 3%; padding-left: 4%; margin-bottom: 20px; text-align: center"
-      (input)="searchChange()">
-  <mat-form-field style="width: 96%;; vertical-align: middle" appearance="outline">
-    <input style="padding-left: 5px; padding-bottom: 5px; font-size: 16px" type="text"
-           placeholder="SEARCH FOR REQUIREMENTS BY KEY OR TITLE" [formControl]="searchControl" matInput
-           (change)="searchChange()">
+<form class="searchbar" (input)="searchIssue()">
+  <mat-form-field matTooltip="Enter an issue's key or its summary to search for it." appearance="outline">
+    <input type="text" placeholder="SEARCH FOR REQUIREMENTS BY KEY OR TITLE" [formControl]="searchControl" matInput>
   </mat-form-field>
 </form>
 
-<div style="display: flex; flex-direction: row; height: 80%; width: 100%; justify-content: center">
-  <mat-selection-list style="overflow:scroll; overflow-x: hidden; width:25%;" class="issues"
-                      [multiple]="false">
-    <div mat-subheader style="color: #000000; font-size: 16px;">Requirements</div>
+<div class="main-container">
+  <mat-selection-list class="issues" [multiple]="false">
+    <div matTooltip="A list of all of your requirements." mat-subheader style="color: #000000; font-size: 16px;">
+      Requirements
+    </div>
 
     <mat-list-option *ngFor="let issue of issues" style="margin: 1px;"
-                     (click)="getReq(issue.key); getClassesForReq(issue.key); edit = false; add = false;">
+                     (click)="getReq(issue.key); getClassesForReq(issue.key); edit = false;">
       <mat-card>
-        <a style="font-weight: bold; margin: 1px;"
-           href="https://hbrs.atlassian.net/browse/{{issue.key}}">{{issue.key}}</a>
-        <p class="text">{{issue.fields.summary}}</p>
+        <p>
+          <span class="issuekey">{{issue.key}}</span>
+          <span class="text">{{issue.fields.summary}}</span>
+        </p>
+        <!--<p class="text">{{issue.fields.summary}}</p> -->
       </mat-card>
     </mat-list-option>
-
   </mat-selection-list>
-  <div style="border-color: red; width: 65%; padding-left: 20px; padding-right: 20px; overflow-x:hidden"
-       *ngIf="selectedIssue" class="issues">
 
-    <p>{{selectedIssue.fields.project.name}} / {{selectedIssue.key}}</p>
-    <h1>{{selectedIssue.fields.summary}}</h1>
-
+  <div *ngIf="selectedIssue" class="right-container">
+    <p>{{selectedIssue.fields.project.name}} /
+      <a href="https://hbrs.atlassian.net/browse/{{selectedIssue.key}}" target="_blank"
+         matTooltip="This link takes you to the issue in Jira.">{{selectedIssue.key}}</a>
+    </p>
+    <h1 style="font-weight: bold">{{selectedIssue.fields.summary}}</h1>
     <table>
       <tr>
         <td style="padding-right: 50px; font-weight: bold">Type:</td>
-        <td style="padding-right: 150px;">{{selectedIssue.fields.issuetype.name}}</td>
+        <td style="padding-right: 150px;"
+            matTooltip="The tyoe of the issue">{{selectedIssue.fields.issuetype.name}}</td>
         <td style="padding-right: 50px; font-weight: bold">Status:</td>
         <td style="padding-right: 50px;">{{selectedIssue.fields.status.name}}</td>
       </tr>
@@ -55,35 +56,27 @@
     <p>{{selectedIssue.fields.description}}</p><br>
     <p style="font-weight: bold">Implemented in:</p>
 
-    <div *ngIf="edit==false && add==false">
+    <!-- Standard Table view -->
+    <div *ngIf="!edit">
       <table class="classes" width="100%">
         <tr style="height: 41px;" class="classes" *ngFor="let cl of selectedIssuesClasses">
           <td class="classes">{{cl}}</td>
         </tr>
       </table>
+      <br>
+      <button mat-raised-button color="primary" matTooltip="Click to add elements to this requirement."
+              (click)="edit = true; getAvailableClasses()">Edit
+      </button>
     </div>
 
 
-    <div *ngIf="edit==true">
+    <!-- Table in edit mode -->
+    <div *ngIf="edit">
       <table class="classes" width="100%">
         <tr class="classes" *ngFor="let cl of selectedIssuesClasses">
           <td class="classes">{{cl}}</td>
           <td style="padding: 0; text-align: center; vertical-align: middle;" class="classes" width="5%">
-            <button mat-icon-button (click)="del(selectedIssue.key, cl)">
-              <mat-icon color="primary">delete</mat-icon>
-            </button>
-          </td>
-        </tr>
-      </table>
-    </div>
-    <br>
-
-    <div *ngIf="add==true">
-      <table class="classes" width="100%">
-        <tr class="classes" *ngFor="let cl of selectedIssuesClasses">
-          <td class="classes">{{cl}}</td>
-          <td style="padding: 0; text-align: center; vertical-align: middle;" class="classes" width="5%">
-            <button mat-icon-button (click)="del(selectedIssue.key, cl)">
+            <button mat-icon-button (click)="deleteTraceBox(selectedIssue.key, cl)">
               <mat-icon color="primary">delete</mat-icon>
             </button>
           </td>
@@ -104,27 +97,9 @@
           </td>
         </tr>
       </table>
+      <br>
+      <button mat-raised-button color="primary" (click)="edit = false;">Done</button>
     </div>
-
-
-    <div *ngIf="!add && !edit">
-      <button *ngIf="selectedIssuesClasses.length" mat-raised-button color="primary" style="margin-right: 5px;" (click)="edit = true">Edit
-        Element
-      </button>
-      <button mat-raised-button color="primary" (click)="add = true; getAvailableClasses()">Add Element</button>
-    </div>
-    <button *ngIf="edit || add" mat-raised-button color="primary" (click)="add = false; edit = false;">Done</button>
-
-
-    <p style="font-weight: bold; margin-top: 30px;">Tested in:</p>
-    <div>
-      <table class="classes" width="100%">
-        <tr style="height: 41px;" class="classes" *ngFor="let cl of selectedIssuesClasses">
-          <td class="classes">{{cl}}</td>
-        </tr>
-      </table>
-    </div>
-
   </div>
 </div>
 

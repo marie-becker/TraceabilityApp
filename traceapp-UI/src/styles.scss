@@ -1,4 +1,130 @@
 /* You can add global styles to this file, and also import other style files */
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+html, body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+
+.text {
+  display: block;
+  width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+table.classes {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td.classes {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+tr.classes:nth-child(even) {
+  background-color: #dddddd;
+}
+
+.issues {
+  border: 2px black;
+  overflow: scroll;
+  overflow-x: hidden;
+  width: 25%;
+  margin-left: 5%
+
+}
+
+.issues::-webkit-scrollbar-track {
+
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+  background-color: #F5F5F5;
+}
+
+.issues::-webkit-scrollbar {
+  width: 12px;
+  background-color: #F5F5F5;
+}
+
+.issues::-webkit-scrollbar-thumb {
+
+  border-radius: 10px;
+  -webkit-box-shadow: inset 0 0 6px rgba(167, 43, 43, 0.3);
+  background-color: #555;
+}
+
+::ng-deep .mat-form-field-outline-start {
+  border-radius: 28px 0 0 28px !important;
+  min-width: 28px !important;
+  border-color: #043b82 !important;
+}
+
+::ng-deep .mat-form-field-outline-end {
+  border-radius: 0 28px 28px 0 !important;
+  border-color: #043b82 !important;
+}
+
+::ng-deep .mat-form-field-flex > .mat-form-field-infix {
+  padding: 0.4em 0 !important;
+}
+
+::ng-deep .mat-form-field-label-wrapper {
+  top: -1.5em;
+}
+
+::ng-deep .mat-form-field-appearance-outline.mat-form-field-can-float.mat-form-field-should-float .mat-form-field-label {
+  transform: translateY(-1.1em) scale(.75);
+  width: 133.33333%;
+}
+
+::ng-deep .mat-list-item-content {
+  padding-right: 0 !important;
+}
+
+.searchbar {
+  margin-top: 30px;
+  padding-right: 3%;
+  padding-left: 4%;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.searchbar input {
+  padding-left: 5px;
+  padding-bottom: 5px;
+  font-size: 16px;
+}
+
+.searchbar mat-form-field {
+  width: 96%;;
+  vertical-align: middle;
+}
+
+.main-container {
+  display: flex;
+  flex-direction: row;
+  height: 80%;
+  width: 100%;
+}
+
+.issuekey {
+  font-weight: bold;
+  color: #253db0;
+}
+
+.right-container {
+  overflow: scroll;
+  width: 65%;
+  padding-left: 10px;
+  padding-right: 5%;
+  overflow-x: hidden;
+}

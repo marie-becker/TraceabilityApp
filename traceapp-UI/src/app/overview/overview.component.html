@@ -3,26 +3,28 @@
 <h1 align="center" style="color:#2c397e; font-weight: bold; padding-bottom: 30px;">Overview of your requirements</h1>
 <div style="display:flex; flex-direction: row; width: 100%; height:80%; justify-content: center; overflow: hidden; margin-bottom: 140px;">
 
-  <mat-list class="issues" style="width: 27%; overflow-y: scroll; overflow-x: hidden;">
-    <div mat-subheader style="color: #000000; font-size: 16px;">To be reviewed</div>
-    <mat-card *ngFor="let issue of reviewableIssues" style="margin: 1px;">
-      <a style="font-weight: bold" href="https://hbrs.atlassian.net/browse/{{issue.key}}">{{issue.key}}</a>
+  <mat-list class="columns">
+    <div mat-subheader
+         matTooltip="This is a list of requirements you should review, because the classes they're implemented in
+         underwent changes. Head to 'Review Changes'.">To be reviewed</div>
+    <mat-card *ngFor="let issue of reviewableIssues">
+      <a style="font-weight: bold" href="https://hbrs.atlassian.net/browse/{{issue.key}}" target="_blank">{{issue.key}}</a>
       <p class="text">{{issue.summary}}</p>
     </mat-card>
   </mat-list>
 
-  <mat-list class="issues" style="width: 27%; overflow-y: scroll; overflow-x: hidden;">
-    <div mat-subheader style="color: #000000; font-size: 16px;">Non-traceable</div>
-    <mat-card *ngFor="let issue of nonTraceableIssues" class="card" style="margin: 1px;">
-      <a style="font-weight: bold" href="https://hbrs.atlassian.net/browse/{{issue.key}}">{{issue.key}}</a>
+  <mat-list class="columns">
+    <div mat-subheader matTooltip="These requirements haven't been associated with any classes and thus are not traceable.">Non-traceable</div>
+    <mat-card *ngFor="let issue of nonTraceableIssues">
+      <a style="font-weight: bold" href="https://hbrs.atlassian.net/browse/{{issue.key}}" target="_blank">{{issue.key}}</a>
       <p class="text">{{issue.summary}}</p>
     </mat-card>
   </mat-list>
 
-  <mat-list class="issues" style="width: 27%; overflow-y: scroll; overflow-x: hidden;">
-    <div mat-subheader style="color: #000000; font-size: 16px;">Traceable</div>
-    <mat-card *ngFor="let issue of traceableIssues" style="margin: 1px;">
-      <a style="font-weight: bold" href="https://hbrs.atlassian.net/browse/{{issue.key}}">{{issue.key}}</a>
+  <mat-list class="columns">
+    <div mat-subheader matTooltip="These requirements have been associated with classes and thus are traceable.">Traceable</div>
+    <mat-card *ngFor="let issue of traceableIssues">
+      <a style="font-weight: bold" href="https://hbrs.atlassian.net/browse/{{issue.key}}" target="_blank">{{issue.key}}</a>
       <p class="text">{{issue.summary}}</p>
     </mat-card>
   </mat-list>

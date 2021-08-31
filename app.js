@@ -5,8 +5,8 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 
 const indexRouter = require('./routes/index');
-const jiraRouter = require('./routes/jira');
-const neo4jRouter = require('./routes/neo4j');
+const jiraRouter = require('./routes/jiraRouter');
+const neo4jRouter = require('./routes/neo4jRouter');
 const neo4jTestRouter = require('./routes/neo4jTests');
 
 
