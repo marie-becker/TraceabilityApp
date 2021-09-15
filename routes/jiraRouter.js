@@ -4,10 +4,10 @@ const router = express.Router();
 
 
 // Specific URLs to save time and data
-const urlFields = 'https://hbrs.atlassian.net/rest/api/latest/search?maxResults=-1&fields=issuetype, project, priority, status, components, summary, description, assignee, reporter';
+const urlFields = 'https://hbrs.atlassian.net/rest/api/latest/search?jql=project=priotool&maxResults=-1&fields=issuetype, project, priority, status, components, summary, description, assignee, reporter';
 const urlIssue = 'https://hbrs.atlassian.net/rest/api/latest/issue/'
 const fields = '?fields=issuetype, project, priority, status, components, summary, description, assignee, reporter';
-const keysAndSummary = 'https://hbrs.atlassian.net/rest/api/latest/search?maxResults=-1&fields=summary';
+const keysAndSummary = 'https://hbrs.atlassian.net/rest/api/latest/search?jql=project=priotool&maxResults=-1&fields=summary';
 
 const config = {
     headers: {

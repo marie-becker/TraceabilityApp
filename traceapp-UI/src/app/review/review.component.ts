@@ -27,9 +27,9 @@ export class ReviewComponent implements OnInit {
 
   ngOnInit(): void {
     this.http.get('/api/neo4j/reviewableIssues').subscribe((data: IssueMin[]) => {
-      this.issues = data.sort((a,b) => a.key.localeCompare(b.key));
+      this.issues = data.sort((a,b) => a.key.localeCompare(b.key, undefined, {numeric: true}));
       this.searchIssues = data;
-      console.log(data)
+      // console.log(data)
       if (this.issues.length != 0) {
         this.getReq(this.issues[0].key);
         this.getClassesForReq(this.issues[0].key);
@@ -98,7 +98,7 @@ export class ReviewComponent implements OnInit {
   }
 
   getIssues(){
-    this.http.get('/api/neo4j/getReviewableIssues').subscribe((data: IssueMin[]) => {
+    this.http.get('/api/neo4j/reviewableIssues').subscribe((data: IssueMin[]) => {
       this.issues = data;
       this.searchIssues = data.sort((a,b) => a.key.localeCompare(b.key));;
       if (this.issues.length != 0) {

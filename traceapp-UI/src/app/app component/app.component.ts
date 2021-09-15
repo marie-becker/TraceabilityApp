@@ -18,6 +18,7 @@ export class AppComponent {
       issues = data;
       this.http.post('/api/neo4j/jiraToNeo4j', {issues: issues}, {responseType: 'text'}).subscribe(r => {
         console.log(r);
+        window.location.reload();
       });
     })
   }
@@ -25,6 +26,7 @@ export class AppComponent {
   updateGit(){
     this.http.post('/updateproject', {project_id:1}, {responseType:'text'}).subscribe((r) => {
       console.log(r);
+      window.location.reload();
     })
   }
 }

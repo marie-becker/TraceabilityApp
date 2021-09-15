@@ -19,6 +19,7 @@
         </p>
         <!--<p class="text">{{issue.fields.summary}}</p> -->
       </mat-card>
+      <h2 *ngIf="issues.length == 0" style="text-align: center">There are no requirements. Create issues in your Jira project or check the neo4jRouter.</h2>
     </mat-list-option>
   </mat-selection-list>
 

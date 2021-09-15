@@ -1,5 +1,61 @@
-<div style="text-align: center; vertical-align: middle">
-  <button style="position: absolute; top:50%" mat-raised-button color="primary" (click)="postJiraToNeo4j()">Post Jira to neo4j</button>
+<div style="padding-left: 15%; padding-right: 15%">
+  <h1 style="padding-top: 10px; font-weight: bold">How do I use this tool?</h1>
+  <mat-card style="">The TraceabilityApp's task is to help you keeping track of the traceability between your
+    requirements and the classes
+    in your software project as well as supporting you when conducting a change impact analysis. In order to do so, your
+    software- and Jira-project need to be known to the tool. Please ask an admin for help, if you don't know how to do
+    that. In the navigation bar, you're finding five different views on the left and two import buttons on the right.
+    If your projects are known to the tool, you can import your Jira issues with the 'Import Jira' button and
+    check for new commits in your repository with the 'Git Import' Button. The different review are explained below.
+  </mat-card>
+  <br>
+  <mat-card>
+    <mat-card-title>Overview</mat-card-title>
+    <mat-card-content>
+      In the overview, your requirements are divided into three groups. The right list 'Traceable' shows all the issues that
+      were associated with one or more classes from your software-project and thus are traceable. The list in the middles
+      shows all the issues, that do not fall into this category. They have no single association to any class, and are 'Non-traceable'.
+      The list on the left consists of issues that are 'To be reviewed'. These issues were and are associated with classes, but the
+      classes were changed in a commit, after the association. You should review the traces between the issues listed here and their
+      associated classes and confirm that they are still associated to the right class(es).
+    </mat-card-content>
+  </mat-card>
+  <br>
+  <mat-card>
+    <mat-card-title>Requirements</mat-card-title>
+    <mat-card-content>
+      The requirements view displays a list of all your Jira-issues. Click an issue in the list to get more information about it
+      on the right side of the page. Below details that are extracted from Jira, you can forward-trace the requirement to the
+      software classes it's implemented in. To add or delete traces, use the 'Edit' button to enter the edit mode.
+      You can delete traces to classes by clicking the trash can on the right or add new traces by choosing a class from the dropdown menu
+      and confirm your choice with the plus symbol on the right. After you're done editing, use the 'Done' button to leave the edit mode.
+      To quickly search for a certain issue, use the search bar on the top. You can either search by entering the issue key or the issue's summary.
+    </mat-card-content>
+  </mat-card>
+  <br>
+  <mat-card>
+    <mat-card-title>Software-Architecture</mat-card-title>
+    <mat-card-content>
+        The view Software-Architecture will show you a list of all the classes in your repository. Click a class in the list to get more information
+      about it on the right side of the page. Below the class' path and last commit date, you will find a table to backward-trace the class to the
+      requirements it implements. You can delete traces to requirements by clicking the trash can on the right or add new traces by choosing a requirement
+      from the dropdown menu and confirm your choice with the plus symbol on the right. After you're done editing, use the 'Done' button to leave the edit mode.
+      To quickly search for a certain classes, use the search bar on the top and enter its name.
+    </mat-card-content>
+  </mat-card>
+  <br>
+  <mat-card>
+    <mat-card-title>Review Changes</mat-card-title>
+    <mat-card-content>
+      The review changes view is where you should go, if you got issues in the 'to be reviewed' list in the overview. This view lists all the issues
+      whose software classes they are associated with have changed or were deleted. To maintain a correct traceability between classes and requirements,
+      you should go through every issue and check their traces for correctness. As in the Requirements view, you got a list to your left. Click on a requirement
+      to get more information on the right. Use the edit button to edit the associated classes, by either deleting traces with the trash can symbol, or adding
+      traces by choosing a class from the dropdown menu and confirming your choice with the plus symbol. To leave the edit mode, click the 'Done' button.
+      You can also use the search bar to search for certain requirements by issue key or summary. When you're done reviewing a certain requirement,
+      use the 'Finish Review' button on the top right. If you are certain that there were no change to the traceability to any of the listed issues,
+      you can use the 'Finish All' button to mark the issues as reviewed.
+    </mat-card-content>
+  </mat-card>
 
-  <button mat-raised-button style="position: absolute; top:40%"  color="primary" (click)="updateGit()">Update Graph DB</button>
 </div>

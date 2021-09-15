@@ -47,7 +47,7 @@ export class ArchitectureComponent implements OnInit {
     this.http.post(`/api/neo4j/availableIssues`, {file:file}).toPromise()
       .then((data: IssueMin[]) => {
         console.log(data.length);
-        this.availableIssues = data.sort((a, b) => a.key.slice(a.key.length - 4).localeCompare(b.key.slice(b.key.length - 4)));
+        this.availableIssues = data.sort((a,b) => a.key.localeCompare(b.key, undefined, {numeric: true}));
       })
       .catch(error => console.log(error))
   }
@@ -55,7 +55,7 @@ export class ArchitectureComponent implements OnInit {
   getIssuesForClass(filename) {
     this.http.get(`/api/neo4j/issuesOfClass/${filename}`).toPromise()
       .then((data: IssueMin[]) => {
-        this.selectedClassIssues = data.sort((a, b) => a.key.slice(a.key.length - 4).localeCompare(b.key.slice(b.key.length - 4)));
+        this.selectedClassIssues = data.sort((a,b) => a.key.localeCompare(b.key, undefined, {numeric: true}));
       })
   }
 

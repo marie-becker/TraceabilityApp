@@ -11,8 +11,8 @@
     <mat-list-option *ngFor="let issue of issues" style="margin: 1px;"
                      (click)="getReq(issue.key); getClassesForReq(issue.key); edit = false;" [value]="issues[0]">
       <mat-card>
-        <p class="issuekey">{{issue.key}}</p>
-        <p class="text">{{issue.summary}}</p>
+        <span class="issuekey">{{issue.key}}</span>
+        <span class="text">{{issue.summary}}</span>
       </mat-card>
     </mat-list-option>
 
@@ -105,7 +105,7 @@
 
   </div>
   <div class="right-container" *ngIf="!selectedIssue">
-    <h1 style="padding-top: 50px;">There are no requirements to review.</h1>
+    <h1 style="padding-top: 50px; text-align: center">There are no requirements to review.</h1>
   </div>
 
 </div>

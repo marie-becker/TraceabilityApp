@@ -7,8 +7,6 @@ const logger = require('morgan');
 const indexRouter = require('./routes/index');
 const jiraRouter = require('./routes/jiraRouter');
 const neo4jRouter = require('./routes/neo4jRouter');
-const neo4jTestRouter = require('./routes/neo4jTests');
-
 
 const app = express();
 
@@ -27,7 +25,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/api/jira', jiraRouter);
 app.use('/api/neo4j', neo4jRouter);
-app.use('/api/neo4jTest', neo4jTestRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

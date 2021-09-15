@@ -11,6 +11,7 @@
       <a style="font-weight: bold" href="https://hbrs.atlassian.net/browse/{{issue.key}}" target="_blank">{{issue.key}}</a>
       <p class="text">{{issue.summary}}</p>
     </mat-card>
+    <h2 *ngIf="reviewableIssues.length == 0" style="text-align: center">There are no issues to review.</h2>
   </mat-list>
 
   <mat-list class="columns">
@@ -19,6 +20,8 @@
       <a style="font-weight: bold" href="https://hbrs.atlassian.net/browse/{{issue.key}}" target="_blank">{{issue.key}}</a>
       <p class="text">{{issue.summary}}</p>
     </mat-card>
+    <h2 *ngIf="nonTraceableIssues.length == 0" style="text-align: center">There are no issues without traces.</h2>
+
   </mat-list>
 
   <mat-list class="columns">
@@ -27,6 +30,7 @@
       <a style="font-weight: bold" href="https://hbrs.atlassian.net/browse/{{issue.key}}" target="_blank">{{issue.key}}</a>
       <p class="text">{{issue.summary}}</p>
     </mat-card>
+    <h2 *ngIf="traceableIssues.length == 0" style="text-align: center">There are no issues with traces.</h2>
   </mat-list>
 
 </div>

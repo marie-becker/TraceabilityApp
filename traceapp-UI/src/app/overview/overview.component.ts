@@ -25,20 +25,20 @@ export class OverviewComponent implements OnInit {
 
   getNonTraceableIssues() {
     this.http.get(`/api/neo4j/nonTraceableIssues`).subscribe((data: IssueMin[]) => {
-      this.nonTraceableIssues = data.sort((a, b) => a.key.slice(a.key.length - 4).localeCompare(b.key.slice(b.key.length - 4)))
+      this.nonTraceableIssues = data.sort((a,b) => a.key.localeCompare(b.key, undefined, {numeric: true}));
     })
   }
 
   getTraceableIssues() {
     this.http.get(`/api/neo4j/traceableIssues`).subscribe((data: IssueMin[]) => {
-      this.traceableIssues = data.sort((a, b) => a.key.slice(a.key.length - 4).localeCompare(b.key.slice(b.key.length - 4)))
+      this.traceableIssues = data.sort((a,b) => a.key.localeCompare(b.key, undefined, {numeric: true}));
     })
   }
 
 
   getRevieableIssues() {
     this.http.get('/api/neo4j/reviewableIssues').subscribe((data: IssueMin[]) => {
-      this.reviewableIssues = data.sort((a, b) => a.key.slice(a.key.length - 4).localeCompare(b.key.slice(b.key.length - 4)))
+      this.reviewableIssues = data.sort((a,b) => a.key.localeCompare(b.key, undefined, {numeric: true}));
     })
   }
 }

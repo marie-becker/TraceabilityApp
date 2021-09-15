@@ -15,7 +15,7 @@
 
   </mat-selection-list>
   <div *ngIf="selectedClass && selectedClassIssues" class="right-container">
-    <a *ngIf="selectedClass.path" href="https://github.com/marie-becker/testprojekt-a/blob/master/{{selectedClass.path}}">{{selectedClass.path}}</a>
+    <a *ngIf="selectedClass.path" href="https://github.com/marie-becker/carlook/blob/master/{{selectedClass.path}}">{{selectedClass.path}}</a>
     <h1 style="font-weight: bold">{{selectedClass.filename}}</h1>
 
     <table>
@@ -71,6 +71,9 @@
       <button *ngIf="edit" mat-raised-button color="primary" (click)="edit = false;">Done</button>
     </div>
 
+  </div>
+  <div class="right-container" *ngIf="!selectedClass">
+    <h1 style="padding-top: 50px;">There are no software classes. Import your Git-repository to show its classes.</h1>
   </div>
 </div>
 
