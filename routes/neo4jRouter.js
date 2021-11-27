@@ -1,8 +1,9 @@
 const neo4j = require('neo4j-driver');
 const express = require('express');
+const config = require("../config");
 const router = express.Router();
 
-const driver = neo4j.driver('bolt://10.20.107.223:8687', neo4j.auth.basic("neo4j", "abc"))
+const driver = neo4j.driver(config.neo4j.bolt, neo4j.auth.basic(config.neo4j.username, config.neo4j.password))
 
 
 /*

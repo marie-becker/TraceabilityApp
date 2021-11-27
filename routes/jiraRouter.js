@@ -1,5 +1,6 @@
 const express = require('express');
 const axios = require("axios");
+const con = require("../config");
 const router = express.Router();
 
 
@@ -9,11 +10,7 @@ const urlIssue = 'https://hbrs.atlassian.net/rest/api/latest/issue/'
 const fields = '?fields=issuetype, project, priority, status, components, summary, description, assignee, reporter';
 const keysAndSummary = 'https://hbrs.atlassian.net/rest/api/latest/search?jql=project=priotool&maxResults=-1&fields=summary';
 
-const config = {
-    headers: {
-        'Authorization': 'Basic bWFyaWUuYmVja2VyQHNtYWlsLmluZi5oLWJycy5kZTp4MXFkRWtOZlBxeFc1MlY1c2ZIUURCQTA=',
-    }
-};
+const config = con.jira;
 
 // Get complete list of requirements
 router.get('/allIssues', async function (req, res) {
@@ -28,11 +25,11 @@ router.get('/allIssues', async function (req, res) {
         total -= maxResults;
         startAt += maxResults;
     }
-    res.send(issues.sort((a,b) => a.key.slice(a.key.length-4).localeCompare(b.key.slice(b.key.length-4))));
+    res.send(issues.sort((a, b) => a.key.slice(a.key.length - 4).localeCompare(b.key.slice(b.key.length - 4))));
 })
 
 // Get list of requirements with key and summary as attributes (to store them in neo4j)
-router.get('/keysAndSummary', async function (req, res){
+router.get('/keysAndSummary', async function (req, res) {
     let issues = [];
     let startAt = 0;
     let response = await getReqByPage(keysAndSummary, startAt);
@@ -59,7 +56,7 @@ router.get('/byKey/:key', function (req, res) {
 
 // Helper method for Pagination
 async function getReqByPage(url, startAt) {
-    return new Promise(function(resolve){
+    return new Promise(function (resolve) {
         axios.get(`${url}&startAt=${startAt}`, config)
             .then((res) => {
                 return resolve(res.data);
