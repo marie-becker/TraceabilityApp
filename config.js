@@ -1,11 +1,14 @@
 const config = {
     jira: {
+        baseUrl: '', //probably something like https://BLABLA.atlassian.net
         headers: {
-            'Authorization': 'Basic TOKEN' //Jira API Token
+            headers: {
+                'Authorization': 'Basic TOKEN' //Jira API Token
+            }
         }
     },
     neo4j: {
-        bolt: 'bolt://xx.xx.xxx.xxx:xxxx',
+        bolt: '', //bolt://xx.xx.xxx.xxx:xxxx
         username: '',
         password: ''
     }

@@ -5,73 +5,6 @@ const router = express.Router();
 
 const driver = neo4j.driver(config.neo4j.bolt, neo4j.auth.basic(config.neo4j.username, config.neo4j.password))
 
-
-/*
-router.get('/classList', async function (req, res) {
-    await openSession();
-    let nodes = []
-    let singleNodes = []
-
-    //Get all files that are connected to a requirement
-    await session.readTransaction(txc => {
-        return txc.run('MATCH(n:File)-[r]->(m:Requirement) return n.filename as filename,n.path as path, n.lastcommit as lastcommit, r, m.key as key, m.summary as summary');
-
-    }).then(async (r) => {
-        r.records.forEach(no => {
-            if (nodes.length !== 0) {
-                let i;
-                i = nodes.findIndex(e => e.filename === no.get('filename'));
-                if (i !== undefined && i !== -1) nodes[i].requirements.push({
-                    key: no.get('key'),
-                    summary: no.get('summary')
-                });
-                else {
-                    nodes.push({
-                        filename: no.get('filename'),
-                        lastcommit: no.get('lastcommit'),
-                        path: no.get('path'),
-                        requirements: [{key: no.get('key'), summary: no.get('summary')}]
-                    });
-                }
-            } else {
-                nodes.push({
-                    filename: no.get('filename'),
-                    lastcommit: no.get('lastcommit'),
-                    path: no.get('path'),
-                    requirements: [{key: no.get('key'), summary: no.get('summary')}]
-                });
-            }
-        })
-
-        // Get all Files
-        await session.readTransaction(txc => {
-            return txc.run('MATCH(n:File) return n.filename as filename, n.lastcommit as lastcommit, n.path as path');
-
-        }).then((s) => {
-
-            s.records.forEach(so => {
-                singleNodes.push({
-                    filename: so.get('filename'),
-                    lastcommit: so.get('lastcommit'),
-                    path: so.get('path'),
-                    requirements: []
-                });
-            })
-            session.close();
-        });
-
-        // Merge arrays to get list of all files, wether they have requirements or not
-        let allNodes = mergeArrays(singleNodes, nodes)
-
-        res.send(allNodes);
-    }).catch((error) => {
-        console.log(error);
-        session.close();
-    });
-});
-
- */
-
 //Get list of classes (filename, lastcommit, path) | Architecture
 router.get('/classList', async function (req, res) {
     const session = driver.session();
@@ -177,7 +110,7 @@ router.post('/deleteReqs', async function (req, res) {
         await session.run(`MATCH (n:Requirement {key: '${r}'}) DELETE n`);
     }
     res.send("ok");
-    session.close();
+    await session.close();
 
 });
 
@@ -318,20 +251,6 @@ router.get('/setIssuesToFalse', async function (req, res){
         session.close();
     })
 })
-
-
-
-function mergeArrays(arr1, arr2) {
-    arr1.forEach(e => {
-        arr2.forEach(f => {
-            if (e.filename === f.filename) {
-                e.requirements = f.requirements;
-            }
-        })
-    })
-    return arr1;
-}
-
 
 
 module.exports = router;
