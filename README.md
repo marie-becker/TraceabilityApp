@@ -8,4 +8,4 @@ For Jira, replace TOKEN with the API Token of your account/project.
 
 ## Run
 To start the backend: `\TraceabilityApp> node .\app.js` <br>
-To start the frontend: `TraceabilityApp\traceapp-UI> npm start`
+To start the frontend: `\TraceabilityApp\traceapp-UI> npm start`
